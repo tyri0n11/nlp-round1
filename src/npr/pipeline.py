@@ -25,7 +25,8 @@ class PipelineConfig:
     use_llm: bool = True
     use_baseline_fallback: bool = True
     llm_backend: str = "ollama"
-    llm_model: str = "qwen2.5:7b-instruct"
+    llm_model: str = "qwen3:8b"
+    llm_think: Optional[bool] = False  # False disables slow <think> on qwen3
     rxnorm_path: str = "data/resources/rxnorm.json"
 
 
@@ -49,7 +50,10 @@ class Pipeline:
         if cfg.use_llm:
             from .ner.llm import LLMExtractor, make_backend
 
-            backend = make_backend(cfg.llm_backend, model=cfg.llm_model)
+            kw = {"model": cfg.llm_model}
+            if cfg.llm_backend == "ollama":
+                kw["think"] = cfg.llm_think
+            backend = make_backend(cfg.llm_backend, **kw)
             self._extractor = LLMExtractor(backend)
 
     def run(self, raw: str) -> List[Concept]:

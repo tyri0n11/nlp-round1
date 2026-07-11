@@ -26,7 +26,9 @@ def main() -> int:
     ap.add_argument("--zip", default="output.zip")
     ap.add_argument("--no-llm", action="store_true", help="heuristic baseline only")
     ap.add_argument("--backend", default="ollama", choices=["ollama", "transformers"])
-    ap.add_argument("--model", default="qwen2.5:7b-instruct")
+    ap.add_argument("--model", default="qwen3:8b")
+    ap.add_argument("--think", dest="think", action="store_true",
+                    help="enable qwen3 <think> phase (slower, default off)")
     ap.add_argument("--rxnorm", default="data/resources/rxnorm.json")
     args = ap.parse_args()
 
@@ -34,6 +36,7 @@ def main() -> int:
         use_llm=not args.no_llm,
         llm_backend=args.backend,
         llm_model=args.model,
+        llm_think=args.think,
         rxnorm_path=args.rxnorm,
     )
     pipe = Pipeline(cfg)

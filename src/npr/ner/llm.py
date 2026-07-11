@@ -34,7 +34,7 @@ Quy tắc:
 - text: sao chép CHÍNH XÁC chuỗi con xuất hiện trong văn bản (giữ nguyên chữ hoa/thường, dấu, số, đơn vị liều).
 - THUỐC: gồm cả liều và đường dùng nếu có (vd "amlodipine 10 mg po daily").
 - TRIỆU_CHỨNG / CHẨN_ĐOÁN / THỦ_THUẬT / XÉT_NGHIỆM: chỉ lấy cụm mô tả, KHÔNG kèm assertion cho triệu chứng (để danh sách rỗng) trừ khi bị phủ định/nghi ngờ/tiền sử.
-- assertions: chỉ dùng khi phù hợp; thuốc/khái niệm thuộc tiền sử -> ["isHistorical"]; phủ định -> ["isAbsent"]; nghi ngờ -> ["isPossible"]. Mặc định để [].
+- assertions: MẶC ĐỊNH để rỗng []. Triệu chứng/chẩn đoán đang hiện diện -> [] (KHÔNG dùng isPresent). Chỉ gán khi có tín hiệu rõ: tiền sử/trước nhập viện -> ["isHistorical"]; phủ định (không, chưa, âm tính) -> ["isAbsent"]; nghi ngờ/theo dõi -> ["isPossible"]; giả định/nếu -> ["isHypothetical"]; của người thân -> ["isFamily"].
 - Giữ đúng thứ tự xuất hiện. Không bịa khái niệm không có trong văn bản.
 
 Trả về JSON: danh sách các object {{"text":..., "type":..., "assertions":[...]}}.
@@ -50,19 +50,74 @@ def build_prompt(text: str) -> str:
     return USER_TEMPLATE.format(types=_TYPE_LIST, asserts=_ASSERT_LIST, text=text)
 
 
+def _recover_objects(s: str) -> list:
+    """Parse each top-level {...} object independently, skipping malformed or
+    truncated ones. Recovers a partial list when the array is cut off or a
+    single object is broken (instead of losing the whole record)."""
+    items: list = []
+    depth = 0
+    buf = []
+    in_str = False
+    esc = False
+    for ch in s:
+        if in_str:
+            buf.append(ch)
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_str = False
+            continue
+        if ch == '"':
+            in_str = True
+            buf.append(ch)
+        elif ch == "{":
+            if depth == 0:
+                buf = []
+            depth += 1
+            buf.append(ch)
+        elif ch == "}":
+            depth -= 1
+            buf.append(ch)
+            if depth == 0:
+                try:
+                    items.append(json.loads("".join(buf)))
+                except json.JSONDecodeError:
+                    pass
+                buf = []
+        elif depth > 0:
+            buf.append(ch)
+    return items
+
+
 def _extract_json(s: str) -> list:
     """Best-effort parse of a JSON array from a model completion."""
     s = s.strip()
-    # strip markdown fences
+    # strip markdown fences and any <think>...</think> block
+    s = re.sub(r"<think>.*?</think>", "", s, flags=re.DOTALL)
     s = re.sub(r"^```(?:json)?|```$", "", s, flags=re.MULTILINE).strip()
     start = s.find("[")
     end = s.rfind("]")
-    if start == -1 or end == -1 or end < start:
-        return []
-    try:
-        return json.loads(s[start : end + 1])
-    except json.JSONDecodeError:
-        return []
+    if start != -1 and end != -1 and end > start:
+        try:
+            return json.loads(s[start : end + 1])
+        except json.JSONDecodeError:
+            pass
+    # fall back to per-object recovery (handles truncation / one bad object)
+    return _recover_objects(s)
+
+
+# map free-form types the model tends to invent onto the allowed vocabulary
+_TYPE_SYNONYMS = {
+    "BỆNH_LÝ": "CHẨN_ĐOÁN",
+    "BỆNH": "CHẨN_ĐOÁN",
+    "CHẨN_ĐOÁN_HÌNH_ẢNH": "XÉT_NGHIỆM",
+    "XÉT_NGHIỆM_CẬN_LÂM_SÀNG": "XÉT_NGHIỆM",
+    "THUỐC_ĐIỀU_TRỊ": "THUỐC",
+    "THỦ_THUẬT_ĐIỀU_TRỊ": "THỦ_THUẬT",
+    "TRIỆU_CHỨNG_LÂM_SÀNG": "TRIỆU_CHỨNG",
+}
 
 
 def _coerce(items: list) -> List[Concept]:
@@ -71,10 +126,14 @@ def _coerce(items: list) -> List[Concept]:
         if not isinstance(it, dict):
             continue
         text = str(it.get("text", "")).strip()
-        typ = str(it.get("type", "")).strip()
+        typ = str(it.get("type", "")).strip().upper().replace(" ", "_")
+        typ = _TYPE_SYNONYMS.get(typ, typ)
         if not text or typ not in TYPES:
             continue
-        asserts = [a for a in (it.get("assertions") or []) if a in ASSERTIONS]
+        # "present" is the default in the gold (example shows current
+        # symptoms with assertions=[]), so drop isPresent to avoid Jaccard loss.
+        asserts = [a for a in (it.get("assertions") or [])
+                   if a in ASSERTIONS and a != "isPresent"]
         out.append(Concept(text=text, type=typ, position=[0, 0], assertions=asserts))
     return out
 
@@ -84,11 +143,14 @@ class OllamaBackend:
     """Talks to a local Ollama server (default on Apple Silicon)."""
 
     def __init__(self, model: str = "qwen2.5:7b-instruct", host: str | None = None,
-                 temperature: float = 0.0, num_ctx: int = 8192):
+                 temperature: float = 0.0, num_ctx: int = 8192, think: bool | None = None):
         self.model = model
         self.host = host or os.environ.get("OLLAMA_HOST", "http://localhost:11434")
         self.temperature = temperature
         self.num_ctx = num_ctx
+        # For hybrid-reasoning models (e.g. qwen3): False disables the slow
+        # <think> phase. None = leave model default (non-reasoning models ignore).
+        self.think = think
 
     def generate(self, system: str, user: str) -> str:
         import urllib.request
@@ -100,8 +162,11 @@ class OllamaBackend:
                 {"role": "user", "content": user},
             ],
             "stream": False,
-            "options": {"temperature": self.temperature, "num_ctx": self.num_ctx},
+            "options": {"temperature": self.temperature, "num_ctx": self.num_ctx,
+                        "num_predict": 6144},
         }
+        if self.think is not None:
+            payload["think"] = self.think
         req = urllib.request.Request(
             f"{self.host}/api/chat",
             data=json.dumps(payload).encode("utf-8"),

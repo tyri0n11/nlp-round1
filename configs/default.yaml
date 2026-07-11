@@ -3,8 +3,9 @@ ner:
   use_llm: true
   use_baseline_fallback: true
   llm_backend: ollama            # ollama | transformers
-  llm_model: qwen2.5:7b-instruct # <=9B, self-hosted (competition rule)
-  # transformers alt: Qwen/Qwen2.5-7B-Instruct
+  llm_model: qwen3:8b            # <=9B, self-hosted (competition rule)
+  llm_think: false               # disable qwen3 <think> (fast: ~4s/file vs ~50s)
+  # alts: qwen2.5:7b-instruct (no think), transformers Qwen/Qwen2.5-7B-Instruct
 
 linking:
   rxnorm_path: data/resources/rxnorm.json

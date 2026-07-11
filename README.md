@@ -7,7 +7,8 @@ concepts with `text`, `type`, `candidates` (RxNorm codes for drugs),
 
 ## Approach
 
-A self-hosted LLM (**Qwen2.5-7B-Instruct**, ≤9B per competition rules) proposes
+A self-hosted LLM (**Qwen3-8B** with `<think>` disabled, ≤9B per competition
+rules; Qwen2.5-7B-Instruct is a drop-in alternate) proposes
 `{text, type, assertions}`; the pipeline then:
 
 1. **aligns** each surface string to exact `[start, end)` offsets (`npr.align`),
@@ -42,7 +43,8 @@ Requires Python 3.9+. The core pipeline uses only the standard library.
 
 ```bash
 ollama serve &                       # start the local server
-ollama pull qwen2.5:7b-instruct      # ≤9B, self-hosted
+ollama pull qwen3:8b                 # ≤9B, self-hosted (default; think disabled)
+# alternate: ollama pull qwen2.5:7b-instruct
 ```
 
 ### Option B — transformers (MPS on Mac, or CUDA for the rebuild box)

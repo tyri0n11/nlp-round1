@@ -51,6 +51,22 @@ def test_wrong_type_scores_zero_candidates():
     assert s.assertions_score == 0.0
 
 
+def test_json_recovery_and_synonym_map():
+    from npr.ner.llm import _coerce, _extract_json
+    # truncated array (no closing ]) + trailing broken object
+    trunc = ('[{"text":"ho","type":"TRIỆU_CHỨNG","assertions":[]},'
+             '{"text":"sốt","type":"BỆNH_LÝ","assertions":["isHistorical"]},'
+             '{"text":"đau')
+    cs = _coerce(_extract_json(trunc))
+    assert [(c.type, c.text) for c in cs] == [("TRIỆU_CHỨNG", "ho"), ("CHẨN_ĐOÁN", "sốt")]
+
+
+def test_ispresent_dropped():
+    from npr.ner.llm import _coerce
+    cs = _coerce([{"text": "ho", "type": "TRIỆU_CHỨNG", "assertions": ["isPresent"]}])
+    assert cs[0].assertions == []
+
+
 def test_baseline_pipeline_runs_without_llm():
     pipe = Pipeline(PipelineConfig(use_llm=False))
     out = pipe.run(EXAMPLE)
