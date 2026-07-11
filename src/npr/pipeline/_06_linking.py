@@ -22,7 +22,7 @@ import re
 from pathlib import Path
 from typing import Dict, List
 
-from ..utils.schema import LINKED_TYPES, Concept
+from ..utils.schema import LINKED_TYPES, TYPE_DIAGNOSIS, Concept
 
 # tokens to strip when reducing a drug span to its ingredient
 _NOISE = re.compile(
@@ -91,5 +91,30 @@ class RxNormLinker:
     def apply(self, concepts: List[Concept]) -> List[Concept]:
         for c in concepts:
             if c.type in LINKED_TYPES:
+                c.candidates = self.link(c.text)
+        return concepts
+
+
+class ICD10Linker:
+    """Offline diagnosis -> ICD-10 code lookup (table built by 06_resolve_icd10)."""
+
+    def __init__(self, table: Dict[str, List[str]] | None = None,
+                 target_type: str = TYPE_DIAGNOSIS):
+        self.table = table or {}
+        self.target_type = target_type
+
+    @classmethod
+    def from_json(cls, path: str | Path, target_type: str = TYPE_DIAGNOSIS) -> "ICD10Linker":
+        p = Path(path)
+        if not p.exists():
+            return cls({}, target_type)
+        return cls(json.loads(p.read_text(encoding="utf-8")), target_type)
+
+    def link(self, span: str) -> List[str]:
+        return list(self.table.get(normalize_span(span), []))
+
+    def apply(self, concepts: List[Concept]) -> List[Concept]:
+        for c in concepts:
+            if c.type == self.target_type and not c.candidates:
                 c.candidates = self.link(c.text)
         return concepts

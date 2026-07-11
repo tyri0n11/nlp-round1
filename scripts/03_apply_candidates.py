@@ -15,8 +15,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from npr.utils.io import read_gold, write_outputs  # noqa: E402
-from npr.pipeline._06_linking import RxNormLinker  # noqa: E402
-from npr.utils.schema import LINKED_TYPES  # noqa: E402
+from npr.pipeline._06_linking import ICD10Linker, RxNormLinker  # noqa: E402
+from npr.utils.schema import LINKED_TYPES, TYPE_DIAGNOSIS  # noqa: E402
 
 
 def main() -> int:
@@ -24,23 +24,27 @@ def main() -> int:
     ap.add_argument("--pred", default="output")
     ap.add_argument("--zip", default="output.zip")
     ap.add_argument("--rxnorm", default="data/resources/rxnorm.json")
+    ap.add_argument("--icd10", default="data/resources/icd10.json")
     args = ap.parse_args()
 
-    linker = RxNormLinker.from_json(args.rxnorm)
+    rx = RxNormLinker.from_json(args.rxnorm)
+    icd = ICD10Linker.from_json(args.icd10)
     preds = read_gold(args.pred)
-    filled = 0
-    drugs = 0
+    drugs = drugs_hit = dx = dx_hit = 0
     for concepts in preds.values():
-        linker.apply(concepts)
+        rx.apply(concepts)
+        icd.apply(concepts)
         for c in concepts:
             if c.type in LINKED_TYPES:
                 drugs += 1
-                if c.candidates:
-                    filled += 1
+                drugs_hit += bool(c.candidates)
+            elif c.type == TYPE_DIAGNOSIS:
+                dx += 1
+                dx_hit += bool(c.candidates)
 
     write_outputs(preds, args.pred, args.zip)
-    print(f"drugs={drugs}, with candidates={filled} "
-          f"({100*filled/drugs:.0f}%) -> {args.pred}/ + {args.zip}")
+    print(f"THUỐC={drugs_hit}/{drugs}, CHẨN_ĐOÁN(ICD-10)={dx_hit}/{dx} "
+          f"-> {args.pred}/ + {args.zip}")
     return 0
 
 

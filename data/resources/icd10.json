@@ -1,0 +1,623 @@
+{
+  "xơ gan do rượu": [
+    "K70.3"
+  ],
+  "bệnh tim mạch do xơ vữa động mạch": [
+    "I70.2"
+  ],
+  "tăng huyết áp": [
+    "I10"
+  ],
+  "phình động mạch chủ nhỏ": [
+    "I76.9"
+  ],
+  "tim to": [
+    "I51.9"
+  ],
+  "rung nhĩ kèm đáp ứng thất nhanh mới": [
+    "I48.9"
+  ],
+  "nhồi máu cơ tim vùng dưới cũ": [
+    "I25.9"
+  ],
+  "thay đổi sóng t không đặc hiệu": [
+    "R94.9"
+  ],
+  "viêm dạ dày": [
+    "K57.9"
+  ],
+  "sỏi đoạn cuối ống mật chủ": [
+    "K80.9"
+  ],
+  "sỏi ống dẫn mật chung đoạn cuối": [
+    "K80.9"
+  ],
+  "tăng lipid máu, không đặc hiệu": [
+    "K92.9"
+  ],
+  "bệnh trào ngược dạ dày- thực quản không có viêm thực quản": [
+    "K21.9"
+  ],
+  "nguyên nhân chưa rõ (đối với phát hiện bệnh lý chất trắng)": [
+    "K92"
+  ],
+  "sẽ không điển hình cho bệnh đa xơ cứng theo ý kiến của bác sĩ thần kinh": [
+    "G34.9"
+  ],
+  "không được coi là thực sự loạn thần": [
+    "F22.9"
+  ],
+  "nốt tuyến giáp thùy trái": [
+    "K70.3"
+  ],
+  "theo dõi và đánh giá kết quả chọc hút bất thường của nốt tuyến giáp trái": [
+    "Z01.1"
+  ],
+  "u cơ trơn tử cung": [
+    "N93.9"
+  ],
+  "mri vùng chậu": [
+    "R13.1"
+  ],
+  "khối u trực tràng với hình ảnh của một u ác trực tràng đáng kể": [
+    "C18.9"
+  ],
+  "phân giai đoạn phẫu thuật với tem": [
+    "K92.9"
+  ],
+  "bệnh gút không đặc hiệu": [
+    "M10"
+  ],
+  "bệnh thận mạn, không đặc hiệu": [
+    "N18"
+  ],
+  "ung thư đại tràng": [
+    "C18"
+  ],
+  "béo phì": [
+    "E66.9"
+  ],
+  "xơ gan mất bù có tăng áp lực tĩnh mạch cửa, cổ trướng và tràn dịch màng phổi": [
+    "K70.3"
+  ],
+  "u sacoit tổn thương chủ yếu tại tim": [
+    "I09"
+  ],
+  "bệnh phổi kẽ do sử dụng corticoid liều cao kéo dài": [
+    "J70.2"
+  ],
+  "hội chứng kháng enzym tổng hợp protein": [
+    "E83.9"
+  ],
+  "tăng huyết áp nguyên phát": [
+    "I10"
+  ],
+  "bệnh động mạch vành mạn tính có thiếu máu cơ tim, hẹp 60% đoạn gần động mạch liên thất trước trái": [
+    "I25.1"
+  ],
+  "xuất huyết nội sọ không do chấn thương, không đặc hiệu": [
+    "I69.9"
+  ],
+  "điều trị chống đông": [
+    "Z51.11"
+  ],
+  "ung thư biểu mô tuyến đại tràng": [
+    "C18.9"
+  ],
+  "bệnh phổi tắc nghẽn mạn tính, không xác định": [
+    "J44.9"
+  ],
+  "đái tháo đường": [
+    "E11.9"
+  ],
+  "viêm phổi bệnh viện": [
+    "J18.9"
+  ],
+  "rung nhĩ kèm nhịp nhanh trên thất": [
+    "I48.9"
+  ],
+  "thuyên tắc mạch phổi": [
+    "I26.9"
+  ],
+  "bóc tách động mạch chủ stanford loại b": [
+    "I25.1"
+  ],
+  "ung thư phổi không tế bào nhỏ": [
+    "C34.9"
+  ],
+  "di căn não vùng trán phải dã phẫu thuật lấy u": [
+    "C79.3"
+  ],
+  "tắc mạch huyết khối tĩnh mạch chủ dưới (ivc) và tĩnh mạch chủ trên (svc) phải": [
+    "I86.9"
+  ],
+  "sa van hai lá": [
+    "I06.9"
+  ],
+  "bệnh tim mạch do xơ vữa động mạch với nhồi máu cơ tim gần đây": [
+    "I25.1"
+  ],
+  "rung nhĩ kịch phát": [
+    "I48.9"
+  ],
+  "tăng sản tuyến tiền liệt": [
+    "N40"
+  ],
+  "phát hiện có gãy cổ xương đùi di lệch": [
+    "S72.8"
+  ],
+  "chấn thương tù ở chi dưới phải (rle)": [
+    "S82.8"
+  ],
+  "vết thương hở phần khác của chi dưới": [
+    "S90.9"
+  ],
+  "gãy xương hông phải: gãy cổ xương đùi phải, lún đầu dưới": [
+    "S72.3"
+  ],
+  "nhồi máu cơ tim vùng vách liên thất, mạn tính và đỉnh": [
+    "I25.1"
+  ],
+  "rung nhĩ kịch phát liên tục kể từ nhồi máu cơ tim": [
+    "I48.9"
+  ],
+  "suy tim, không đặc hiệu": [
+    "I50"
+  ],
+  "bệnh mạch máu": [
+    "I77"
+  ],
+  "hình ảnh khối máu tụ dưới màng cứng bán cấp hai bên": [
+    "G93.9"
+  ],
+  "xơ vữa động mạch": [
+    "I70"
+  ],
+  "ăng huyết áp": [
+    "I10"
+  ],
+  "rối loạn lipid máu": [
+    "E78"
+  ],
+  "xuất huyết dưới nhện": [
+    "I69.9"
+  ],
+  "ung thư vú trái giai iiib ung thư vú trái": [
+    "C50.9"
+  ],
+  "tách thành động mạch chủ": [
+    "I74.9"
+  ],
+  "rò động - tĩnh mạch đùi phải do thủ thuật can thiệp": [
+    "K70.3"
+  ],
+  "viêm tụy": [
+    "K86"
+  ],
+  "rung nhĩ": [
+    "I48"
+  ],
+  "rối loạn cảm xúc lưỡng cực khác": [
+    "F31"
+  ],
+  "sỏi mật": [
+    "K80"
+  ],
+  "túi mật căng to với dịch quanh túi mật gợi ý viêm túi mật cấp": [
+    "K81.9"
+  ],
+  "viêm túi mật cấp": [
+    "K56.9"
+  ],
+  "bệnh bạch cầu dòng tủy mãn tính": [
+    "C91"
+  ],
+  "tăng cholesterol máu đơn thuần": [
+    "E78.0"
+  ],
+  "khởi phát chuyển dạ": [
+    "O30.1"
+  ],
+  "đái tháo đường típ 2": [
+    "E11.9"
+  ],
+  "rung nhĩ kèm đáp ứng thất nhanh": [
+    "I48.9"
+  ],
+  "chẩn đoán nhiễm khuẩn huyết do tụ cầu vàng nhạy cảm methicillin": [
+    "A49.0"
+  ],
+  "nghi liên quan đến đường truyền tĩnh mạch trung tâm ngoại vi (picc)": [
+    "Z86.1"
+  ],
+  "hẹp ống sống": [
+    "K70.3"
+  ],
+  "giả gout": [
+    "M90"
+  ],
+  "bệnh thận mạn, không đặc hiệu giai đoạn 4": [
+    "N18.5"
+  ],
+  "vừa được xuất viện sau chẩn đoán cho ảo giác bình thường": [
+    "F22.9"
+  ],
+  "đánh giá chuyên khoa huyết học - ung bướu: không nghĩ đây là biến đổi cấp tính và có khả năng đại diện cho cml trong bối cảnh ngừng gleevec": [
+    "C91"
+  ],
+  "bệnh thận đa nang": [
+    "N18"
+  ],
+  "bệnh lý thận do bk": [
+    "N04"
+  ],
+  "lo ngại về đào thải": [
+    "Z68.29"
+  ],
+  "suy tim không do thiếu máu cơ tim": [
+    "I50"
+  ],
+  "tăng gánh nhẹ tuần hoàn phổi": [
+    "I25.1"
+  ],
+  "giãn phế quản": [
+    "J44"
+  ],
+  "viêm phổi thùy dưới phải (rll pna)": [
+    "J80"
+  ],
+  "hội chứng ruột kích thích": [
+    "K58.9"
+  ],
+  "loét tá tràng": [
+    "K57.0"
+  ],
+  "viêm dạ dày ruột do virus": [
+    "K52.9"
+  ],
+  "loét tá tràng và hồi tràng": [
+    "K56.9"
+  ],
+  "viêm thực quản độ c": [
+    "K21.9"
+  ],
+  "loét thực quản dưới 6 mm có điểm sắc tố": [
+    "K21.0"
+  ],
+  "nhiều loét nông sạch đáy ở tá tràng và hồi tràng sớm": [
+    "K56.9"
+  ],
+  "loại trừ khả năng nhồi máu cơ tim": [
+    "I25.9"
+  ],
+  "hẹp van động mạch chủ nghiêm trọng": [
+    "I85.9"
+  ],
+  "lhc không ghi nhận hẹp gây hạn chế dòng chảy": [
+    "K70.3"
+  ],
+  "ntg khó thở cải thiện": [
+    "R06"
+  ],
+  "nhịp tim cải thiện thành": [
+    "I49.9"
+  ],
+  "tắc hẹp 80% động mạch thận trái l": [
+    "I85.1"
+  ],
+  "ung thư biểu mô tuyến": [
+    "C50"
+  ],
+  "gần đây được chẩn đoán ngất xỉu do phản ứng thần kinh mạch máu sau cơn ngất": [
+    "R04"
+  ],
+  "hạ kali máu rõ rệt trong bối cảnh tiêu chảy và có khả năng nhiễm trùng đường hô hấp trên cấp, không xác định": [
+    "K52.9"
+  ],
+  "nhiều nang tụy nhỏ": [
+    "K86.9"
+  ],
+  "một ổ dịch sau phẫu thuật giảm kích thước so với lần chụp chẩn đoán hình ảnh trước": [
+    "K92.9"
+  ],
+  "blốc nhĩ thất, hoàn toàn sau khi đặt máy tạo nhịp (ppm)": [
+    "I44.9"
+  ],
+  "viêm phổi thuỳ, không đặc hiệu": [
+    "J18.9"
+  ],
+  "chẩn đoán viêm phổi thùy dưới trái bằng hình ảnh": [
+    "J80"
+  ],
+  "suy thận cấp": [
+    "N18.5"
+  ],
+  "tái phát u ác trực tràng": [
+    "C18.9"
+  ],
+  "rung cuống nhĩ với đáp ứng thất nhanh": [
+    "I49.9"
+  ],
+  "tiền sử đái tháo đường": [
+    "E11"
+  ],
+  "nghiệm pháp gắng sức dương tính với thiếu máu cơ tim cục bộ": [
+    "I20.1"
+  ],
+  "st chênh xuống ở các chuyển đạo thành dưới và thành bên": [
+    "I46.9"
+  ],
+  "đoạn st chênh xuống kiểu xuống dốc": [
+    "I20.0"
+  ],
+  "bệnh graves": [
+    "E05.9"
+  ],
+  "code tai biến mạch máu não": [
+    "I69.9"
+  ],
+  "não úng thuỷ khác từ thời kỳ sơ sinh": [
+    "P05"
+  ],
+  "thoát vị hoành": [
+    "K43.9"
+  ],
+  "thoát vị cạnh thực quản": [
+    "K56.9"
+  ],
+  "đáy vị": [
+    "K41.9"
+  ],
+  "lớp băng cuốn lên lồng ngực": [
+    "K92.9"
+  ],
+  "nối thực quản - dạ dày": [
+    "K45.9"
+  ],
+  "thay đổi thoái hóa nghiêm trọng của khớp bánh chè đùi phải": [
+    "M19.9"
+  ],
+  "góc tăng lên": [
+    "H16.9"
+  ],
+  "bệnh túi thừa": [
+    "K56.9"
+  ],
+  "viêm túi mật cấp tính không biến chứng": [
+    "K56.9"
+  ],
+  "viêm túi mật": [
+    "K56.9"
+  ],
+  "túi thừa của cả ruột non và đại tràng": [
+    "K56.9"
+  ],
+  "đánh giá rối loạn đông máu": [
+    "K92"
+  ],
+  "đánh giá tăng cr theo phòng cấp cứu": [
+    "R94.8"
+  ],
+  "viêm bể thận và viêm phế quản": [
+    "J18.9"
+  ],
+  "fna của một nốt sần tuyến giáp phải có cấu trúc vi nang": [
+    "Z01.1"
+  ],
+  "siêu âm cho thấy sỏi mật": [
+    "K80.9"
+  ],
+  "tâm thần phân liệt": [
+    "F20"
+  ],
+  "khối ở chỗ uốn gan": [
+    "K70.3"
+  ],
+  "ung thư biểu mô tuyến trên sinh thiết": [
+    "C50.9"
+  ],
+  "tiền sử khối u thận": [
+    "Z85.0"
+  ],
+  "ung thư biểu mô tế bào thận": [
+    "C68"
+  ],
+  "ung thư biểu mô tuyến giật nhú": [
+    "C50.9"
+  ],
+  "tăng men gan": [
+    "K70.3"
+  ],
+  "tăng bilirubin máu": [
+    "K70.3"
+  ],
+  "không có sỏi hoặc bệnh lý khác": [
+    "Z03.8"
+  ],
+  "tống ra một viên sỏi mật": [
+    "K80.9"
+  ],
+  "túi mật giãn nở rõ rệt": [
+    "K83.9"
+  ],
+  "tăng lipid máu": [
+    "E78.9"
+  ],
+  "bệnh tim mạch do xơ vữa động mạch sau cabg": [
+    "I25.9"
+  ],
+  "suy tim, không đặc hiệu hệ số tống máu 50 inch": [
+    "I50.9"
+  ],
+  "tăng huyết áp phổi": [
+    "I25.1"
+  ],
+  "suy tim sung huyết cấp": [
+    "I50.9"
+  ],
+  "graft svg bị tắc": [
+    "K90.9"
+  ],
+  "graft lima ổn định": [
+    "Z95.8"
+  ],
+  "bệnh động mạch vành phải nặng hơn với 60 rpl và 40 mid rca": [
+    "I25.1"
+  ],
+  "động mạch vành trái bình thường": [
+    "I25.9"
+  ],
+  "áp lực nạp tăng": [
+    "K87.9"
+  ],
+  "áp lực tâm thu phổi ở": [
+    "I25.1"
+  ],
+  "áp lực tĩnh mạch bít": [
+    "I83.9"
+  ],
+  "khối phình to 2 cm ở nhúm tá tràng lớn với gợi ý về một khối khối u lân cận": [
+    "K26.9"
+  ],
+  "u ác của đầu tuỵ mới được chẩn đoán": [
+    "C79.9"
+  ],
+  "các đặc điểm mô học phù hợp với một khối u có nguồn gốc từ đường mật tụy": [
+    "K83.9"
+  ],
+  "nhồi máu cơ tim": [
+    "I21.9"
+  ],
+  "hội chứng mạch vành cấp": [
+    "I20.9"
+  ],
+  "lo ngại về áp xe": [
+    "K92"
+  ],
+  "bệnh động mạch vành sau can thiệp bắc cầu nối": [
+    "I25.9"
+  ],
+  "bệnh động mạch vành": [
+    "I25"
+  ],
+  "bàn chân vẹo bẩm sinh": [
+    "Q64"
+  ],
+  "gãy 3 xương sườn 9, 10 và 11": [
+    "S22.3"
+  ],
+  "xương sườn thứ 10 bị gãy vụn": [
+    "S22.3"
+  ],
+  "độ dày niêm mạc xoang hàm dày lên": [
+    "J34.9"
+  ],
+  "không có tổn thương rõ ràng khác trên chụp cắt lớp vi tính (ct) bụng": [
+    "K92.9"
+  ],
+  "u ác của tuyến tiền liệt điều trị bằng xạ trị cấy hạt": [
+    "C61"
+  ],
+  "chẩn đoán u ác của tuyến tiền liệt": [
+    "C61"
+  ],
+  "hở van hai lá nặng": [
+    "I05"
+  ],
+  "không có bệnh động mạch vành": [
+    "I25.9"
+  ],
+  "chẩn đoán hình ảnh không cho thấy quá trình bệnh lý tim mạch hoặc hô hấp cấp tính": [
+    "Z03.8"
+  ],
+  "chụp x-quang ngực phù hợp với viêm phổi kẽ": [
+    "J18.9"
+  ],
+  "đái tháo đường type ii": [
+    "E11.9"
+  ],
+  "bệnh động mạch vành sau phẫu thuật bắc cầu nối động mạch vành": [
+    "I25.9"
+  ],
+  "suy tim": [
+    "I50"
+  ],
+  "bệnh mạch máu ngoại biên": [
+    "I73"
+  ],
+  "bệnh phổi tắc nghẽn mạn tính": [
+    "J44.9"
+  ],
+  "ung thư biểu mô tế bào vảy xâm nhập của dương vậtbiệt hóa kém": [
+    "C51.9"
+  ],
+  "sau cắt bao quy đầu với bờ diện cắt dương tính": [
+    "Z94.1"
+  ],
+  "bệnh lý thần kinh ngoại biên": [
+    "G58"
+  ],
+  "trầm cảm": [
+    "F32.9"
+  ],
+  "nhiễm trùng chi dưới bên phải": [
+    "K70.3"
+  ],
+  "đái tháo đường típ 1": [
+    "E10.9"
+  ],
+  "biến chứng viêm thần kinh ngoại biên": [
+    "G00"
+  ],
+  "viêm gan virus c": [
+    "B18.9"
+  ],
+  "tăng áp động mạch phổi mức độ trung bình": [
+    "I25.1"
+  ],
+  "u lympho không hodgkin tế bàob lớn lan toả": [
+    "C83.9"
+  ],
+  "chẩn đoán: theo dõiloét bàn chân nhiễm trùng": [
+    "K70.3"
+  ],
+  "inr dưới ngưỡng điều trị": [
+    "I97.9"
+  ],
+  "ung thư vú di căn": [
+    "C79"
+  ],
+  "tràn dịch màng phổi trái tái phát": [
+    "J91.9"
+  ],
+  "ung thư di căn theo đường bạch huyết ở hai phổi": [
+    "C78.0"
+  ],
+  "ung thư vú di căn er+/her2−": [
+    "C50.9"
+  ],
+  "viêm tủy xương và bàng quang thần kinh có biến chứng liệt hai chi dưới": [
+    "G06.9"
+  ],
+  "chụp x-quang ngực cho thấy không có hình ảnh tổn thương viêm cấp tính so với chụp x-quang ngực trước đó": [
+    "R09"
+  ],
+  "các tổn thương ổ tiêu xương lan tỏa": [
+    "M99.9"
+  ],
+  "đa u tủy xương": [
+    "C79"
+  ],
+  "u ác của đại tràng": [
+    "C18"
+  ],
+  "cường cận giáp nguyên phát": [
+    "E83.0"
+  ],
+  "cơn đau thắt ngực ổn định": [
+    "I20.0"
+  ],
+  "nhồi máu cũ nhỏ ở vỏ não đỉnh trái": [
+    "I69.9"
+  ]
+}
