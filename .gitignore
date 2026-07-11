@@ -4,6 +4,5 @@ __pycache__/
 venv/
 output/
 output.zip
-data/resources/rxnorm.json
 *.egg-info/
 .DS_Store
