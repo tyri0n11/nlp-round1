@@ -17,6 +17,7 @@ from . import align
 from .assertions import rules as assert_rules
 from .linking.rxnorm import RxNormLinker
 from .ner import baseline as ner_baseline
+from .postprocess import clean_spans
 from .schema import Concept, validate_concept
 
 
@@ -66,6 +67,7 @@ class Pipeline:
             # merge baseline drug spans the LLM may have missed
             proposed = proposed + ner_baseline.extract(raw)
 
+        proposed = clean_spans(proposed)  # strip "cho/dùng/..." prefixes
         located = align.assign_positions(raw, proposed)
         located = _dedup(located)
         located = assert_rules.apply(raw, located)
