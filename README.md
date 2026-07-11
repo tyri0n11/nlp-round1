@@ -61,11 +61,13 @@ Candidates are RxNorm RXCUIs (SCD granularity, e.g. `308135` = "amlodipine
 used at inference time (competition rule); resolution happens at build time.**
 
 Recommended — resolve the actual drug spans via the free RxNav API (no UMLS
-license needed):
+license needed). An LLM normalization step canonicalizes brand→generic
+(coumadin→warfarin), Vietnamese→English, and filters non-drug spans:
 
 ```bash
-python3 scripts/resolve_rxnav.py --from-output output
+python3 scripts/resolve_rxnav.py --from-output output --llm   # or: make resolve
 # -> data/resources/rxnorm.json  ({normalized_span: [RXCUI]}), SCD-preferred
+# regex-only (faster, weaker on brands):  make resolve-fast
 ```
 
 Or, fully offline from an RxNorm RRF release (needs a free UMLS account):

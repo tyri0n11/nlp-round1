@@ -14,9 +14,7 @@
   "aspirin 325mg x 1": [
     "198467"
   ],
-  "không tuân thủ điều trị bằng thuốc": [
-    "10865"
-  ],
+  "không tuân thủ điều trị bằng thuốc": [],
   "nsaid": [
     "369463"
   ],
@@ -24,7 +22,7 @@
     "389171"
   ],
   "seroquel": [
-    "368152"
+    "312744"
   ],
   "iron": [
     "90176"
@@ -34,22 +32,18 @@
     "199884"
   ],
   "tylenol": [
-    "369070"
+    "2705808"
   ],
-  "corticoid liều cao kéo dài": [
-    "795064"
-  ],
+  "corticoid liều cao kéo dài": [],
   "vicodin (uống không thấy giảm đau)": [
-    "884783"
+    "857002"
   ],
   "metoprolol (reduced from 50mg to 25mg daily)": [
-    "866482"
+    "866924"
   ],
-  "reduced from 50mg": [
-    "313774"
-  ],
+  "reduced from 50mg": [],
   "to 25mg daily": [
-    "1049630"
+    "371966"
   ],
   "desmopressin": [
     "833008"
@@ -58,32 +52,30 @@
     "198467"
   ],
   "coumadin": [
-    "368417"
+    "855288"
   ],
   "albuterolipratropium nebs x2 - metoprolol 5mg iv": [
-    "866508"
+    "2108259"
   ],
   "metoprolol 5mg iv": [
     "866508"
   ],
   "eliquis": [
-    "1364438"
+    "1364445"
   ],
   "gleevec": [
-    "406060"
+    "403878"
   ],
   "allopurinol": [
     "252931"
   ],
-  "thuốc giảm đau": [],
-  "thuốc giảm đau đã ngừng": [
-    "998254"
+  "thuốc giảm đau": [
+    "2705808"
   ],
-  "liều gleevec đã ngừng cách nhập viện 5 ngày": [
-    "406060"
-  ],
+  "thuốc giảm đau đã ngừng": [],
+  "liều gleevec đã ngừng cách nhập viện 5 ngày": [],
   "allopurinol đã ngừng cách nhập viện 5 ngày": [
-    "370547"
+    "252931"
   ],
   "guaifenesin": [
     "197741"
@@ -113,7 +105,7 @@
     "198467"
   ],
   "albuterolipratropium nebulizer": [
-    "307718"
+    "2108259"
   ],
   "cho methylprednisolone 125mg iv": [
     "1743704"
@@ -124,25 +116,23 @@
   "lợi tiểu 600cc": [],
   "thuốc giảm đau opioid": [],
   "thuốc trước khi nhập viện: gleevec (dừng theo chỉ dẫn sau xuất viện)": [
-    "406060"
+    "403878"
   ],
   "azathioprine": [
     "239983"
   ],
   "prograf (dose decreased from 5mg bid to 1mg bid)": [
-    "108514"
+    "198377"
   ],
-  "dose decreased from 5mg bid": [
-    "313774"
-  ],
+  "dose decreased from 5mg bid": [],
   "to 1mg bid": [
-    "1049630"
+    "197901"
   ],
   "cellcept": [
-    "152633"
+    "311881"
   ],
   "prograf dose decreased from 5mg bid": [
-    "108514"
+    "198378"
   ],
   "torsemide": [
     "198372"
@@ -157,16 +147,16 @@
     "311192"
   ],
   "rosuvastatin (crestor)": [
-    "405880"
+    "2167573"
   ],
   "carvedilol": [
     "200033"
   ],
   "iv lasix 40 mg once": [
-    "565458"
+    "313988"
   ],
   "mucinex d": [
-    "352777"
+    "197741"
   ],
   "azithromycin": [
     "1668238"
@@ -175,13 +165,13 @@
     "864718"
   ],
   "cho 10mg iv": [
-    "70167"
+    "250259"
   ],
   "albuterol nebs q4h": [
-    "370542"
+    "197316"
   ],
   "z-pack": [
-    "750149"
+    "1668238"
   ],
   "prednisone": [
     "198144"
@@ -195,14 +185,10 @@
   "prednisone 40 mg/ngày": [
     "373585"
   ],
-  "minutes - iv magnesium - 30 mg": [
-    "2731632"
-  ],
-  "total of 60 mg": [
-    "1049630"
-  ],
+  "minutes - iv magnesium - 30 mg": [],
+  "total of 60 mg": [],
   "augmentin đường uống": [
-    "151392"
+    "617301"
   ],
   "vancomycin": [
     "1807516"
@@ -213,32 +199,28 @@
   "amiodarone": [
     "833528"
   ],
-  "thay thế bicarbonate": [
-    "373899"
-  ],
+  "thay thế bicarbonate": [],
   "colace": [
-    "82000"
+    "596926"
   ],
   "ertapenem": [
     "1734683"
   ],
   "cao acetaminophen 500mg": [
-    "198440"
+    "198439"
   ],
   "acetaminophen 500mg": [
     "198440"
   ],
-  "10 pills at a time": [
-    "1170153"
-  ],
+  "10 pills at a time": [],
   "4 viên mỗi giờ": [
-    "581662"
+    "348978"
   ],
   "thuốc an thần": [
-    "707263"
+    "197590"
   ],
   "lasix (tăng liều gần đây)": [
-    "368487"
+    "197732"
   ],
   "aspirin 81mg": [
     "308416"
@@ -253,7 +235,7 @@
     "866412"
   ],
   "lasix 40mg daily": [
-    "200809"
+    "313988"
   ],
   "atorvastatin 80mg daily": [
     "259255"
@@ -262,17 +244,15 @@
     "311353"
   ],
   "ranexa 500mg daily": [
-    "616493"
+    "860738"
   ],
   "cipro": [
-    "368093"
+    "197511"
   ],
   "bactrim": [
-    "151399"
+    "10831"
   ],
-  "kháng sinh cho nhiễm khuẩn đường tiết niệu, vị trí không xác định": [
-    "220413"
-  ],
+  "kháng sinh cho nhiễm khuẩn đường tiết niệu, vị trí không xác định": [],
   "aspirin": [
     "104474"
   ],
@@ -280,93 +260,93 @@
     "392174"
   ],
   "nitroglycerin dạng bôi/dán lên da (mỡ nitroglycerin)": [
-    "4917"
+    "392174"
   ],
   "ativan ( lorazepam)": [
-    "91879"
+    "197901"
   ],
   "lovenox": [
-    "225036"
+    "854255"
   ],
   "plavix": [
-    "368301"
+    "309362"
   ],
   "nitrateskhi đau ngực": [],
   "heparin": [
     "849760"
   ],
   "nitro": [
-    "202508"
+    "311991"
   ],
   "dilaudid 3mg": [
-    "368895"
+    "898139"
   ],
-  "klonopinclonidine": [],
+  "klonopinclonidine": [
+    "884173"
+  ],
   "clonidine": [
     "884173"
   ],
-  "được kê đơn": [
-    "1604558"
-  ],
+  "được kê đơn": [],
   "mua trên đường phố": [],
   "suboxone": [
-    "352990"
+    "352364"
   ],
-  "bắt đầu 3 tuần trước": [
-    "1722719"
-  ],
-  "không dùng đều 5-6 ngày": [
-    "1315114"
-  ],
-  "dừng thuốc trước nhập viện 01 ngày": [
-    "1315114"
-  ],
-  "dừng dùng suboxone ngày hôm qua": [
-    "1315114"
-  ],
+  "bắt đầu 3 tuần trước": [],
+  "không dùng đều 5-6 ngày": [],
+  "dừng thuốc trước nhập viện 01 ngày": [],
+  "dừng dùng suboxone ngày hôm qua": [],
   "lợi tiểu": [],
   "ceftriaxone 1 gram dùng 1 liều": [
     "1665021"
   ],
   "uống tylenol 1 gram, 1 liều duy nhất": [
-    "369070"
+    "430837"
   ],
   "kháng sinh tĩnh mạch": [
-    "797892"
+    "204602"
   ],
   "methadonekéo dài": [
-    "372808"
+    "864718"
   ],
   "lasix": [
-    "368487"
+    "197732"
   ],
   "octreotide": [
     "898589"
   ],
   "flagyl": [
-    "202866"
+    "199326"
   ],
   "coumadin 3.0 mg": [
-    "855320"
+    "855318"
   ],
   "coumadin 3.0 mg /ngày": [
-    "855320"
+    "855318"
   ],
   "heparin truyền tĩnh mạch liên tục": [
-    "5224"
+    "849760"
   ],
-  "weekly taxol": [],
+  "weekly taxol": [
+    "583214"
+  ],
   "fulvestrant": [
     "727762"
   ],
   "compazine": [
-    "368096"
+    "312635"
   ],
-  "morphineoral": [],
+  "morphineoral": [
+    "892582"
+  ],
   "lorazepam": [
     "197901"
   ],
   "vancozosyn": [],
-  "laxis 20mg": [],
-  "natriclori 0.9 %": []
+  "laxis 20mg": [
+    "310429"
+  ],
+  "natriclori 0.9 %": [
+    "1807630"
+  ]
 }

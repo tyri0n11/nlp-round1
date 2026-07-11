@@ -32,8 +32,12 @@ predict: serve
 baseline:
 	$(PY) scripts/predict.py --input $(INPUT) --out $(OUT) --zip $(ZIP) --no-llm
 
-## resolve: tra mã thuốc RxNorm (1 lần, cần mạng) -> data/resources/rxnorm.json
+## resolve: tra mã thuốc RxNorm qua LLM-normalize + RxNav (1 lần, cần mạng)
 resolve:
+	$(PY) scripts/resolve_rxnav.py --from-output $(OUT) --llm --model $(MODEL)
+
+## resolve-fast: bản regex (không LLM) — nhanh hơn, kém chính xác trên tên brand
+resolve-fast:
 	$(PY) scripts/resolve_rxnav.py --from-output $(OUT)
 
 ## candidates: điền mã thuốc vào output có sẵn (không chạy lại AI) + nén zip
@@ -60,4 +64,4 @@ stats:
 clean:
 	rm -rf $(OUT) $(ZIP)
 
-.PHONY: help serve model predict baseline resolve candidates submit eval test stats clean
+.PHONY: help serve model predict baseline resolve resolve-fast candidates submit eval test stats clean
