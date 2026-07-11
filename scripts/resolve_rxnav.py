@@ -28,7 +28,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from npr.utils.io import read_gold  # noqa: E402
-from npr.pipeline.linking import normalize_span  # noqa: E402
+from npr.pipeline._06_linking import normalize_span  # noqa: E402
 from npr.utils.schema import TYPE_DRUG  # noqa: E402
 
 RXNAV = "https://rxnav.nlm.nih.gov/REST"
@@ -231,7 +231,7 @@ def main() -> int:
 
     backend = None
     if args.llm:
-        from npr.pipeline.ner_llm import OllamaBackend
+        from npr.pipeline._01_ner_llm import OllamaBackend
         backend = OllamaBackend(model=args.model, think=False)
 
     if args.from_output:

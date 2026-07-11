@@ -14,9 +14,11 @@ from typing import List
 
 from ..config import PipelineConfig
 from ..utils.schema import Concept, validate_concept
-from . import align, assertions as assert_rules, ner_baseline
-from .linking import RxNormLinker
-from .postprocess import clean_spans
+from . import _02_ner_baseline as ner_baseline
+from . import _04_align as align
+from . import _05_assertions as assert_rules
+from ._03_postprocess import clean_spans
+from ._06_linking import RxNormLinker
 
 __all__ = ["Pipeline", "PipelineConfig"]
 
@@ -39,7 +41,7 @@ class Pipeline:
         self.linker = RxNormLinker.from_json(cfg.rxnorm_path)
         self._extractor = None
         if cfg.use_llm:
-            from .ner_llm import LLMExtractor, make_backend
+            from ._01_ner_llm import LLMExtractor, make_backend
 
             kw = {"model": cfg.llm_model}
             if cfg.llm_backend == "ollama":
