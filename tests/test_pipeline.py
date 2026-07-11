@@ -67,6 +67,15 @@ def test_ispresent_dropped():
     assert cs[0].assertions == []
 
 
+def test_wrong_type_empty_candidates_note():
+    # brief note: right text + wrong type -> counted twice, 0 on all metrics.
+    # aligned honors it (J=0); pooled would wrongly give 1 (empty-vs-empty).
+    gold = {"1": [Concept("ho", TYPE_SYMPTOM, [0, 2], [], [])]}
+    pred = {"1": [Concept("ho", "CHẨN_ĐOÁN", [0, 2], [], [])]}
+    assert evaluate(gold, pred, mode="aligned").assertions_score == 0.0
+    assert evaluate(gold, pred, mode="pooled").assertions_score == 1.0  # note violated
+
+
 def test_baseline_pipeline_runs_without_llm():
     pipe = Pipeline(PipelineConfig(use_llm=False))
     out = pipe.run(EXAMPLE)

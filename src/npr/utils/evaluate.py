@@ -99,6 +99,20 @@ def _jaccard(a: Sequence[str], b: Sequence[str]) -> float:
     return len(sa & sb) / len(sa | sb)
 
 
+def _pooled_field_jaccard(gold, pred, field: str) -> Tuple[float, float]:
+    """Literal reading of the brief: J_X(i) is ONE set-Jaccard over all field-X
+    values pooled across the sample's concepts. Returns (J, W).
+
+    NOTE: this reading conflicts with the brief's own note that a right-text /
+    wrong-type concept scores 0 (pooled empty-vs-empty would score 1), which is
+    why `aligned` is the default. Kept for comparison.
+    """
+    g_pool = [v for c in gold for v in getattr(c, field)]
+    p_pool = [v for c in pred for v in getattr(c, field)]
+    w_sample = sum(len(getattr(c, field)) + 1 for c in gold)
+    return _jaccard(g_pool, p_pool), w_sample
+
+
 def _sample_field_jaccard(gold, pred, field: str, weighted: bool) -> Tuple[float, float]:
     """Return (J_field(i), W(i)) for one sample."""
     pairs, um_gold, um_pred = _align(gold, pred)
@@ -142,9 +156,16 @@ class Scores:
         }
 
 
-def evaluate(gold: Dict[str, List[Concept]], pred: Dict[str, List[Concept]]) -> Scores:
+def evaluate(gold: Dict[str, List[Concept]], pred: Dict[str, List[Concept]],
+             mode: str = "aligned") -> Scores:
+    """mode="aligned" (default): per-concept Jaccard keyed by (text,type), the
+    only reading consistent with the brief's wrong-type note. mode="pooled":
+    literal sample-level set Jaccard from the written formula (for comparison)."""
     ids = list(gold.keys())
     n = len(ids) or 1
+    field_j = _pooled_field_jaccard if mode == "pooled" else (
+        lambda g, p, f: _sample_field_jaccard(g, p, f, weighted=(f == "candidates"))
+    )
 
     text_sum = 0.0
     assert_sum = 0.0
@@ -156,10 +177,10 @@ def evaluate(gold: Dict[str, List[Concept]], pred: Dict[str, List[Concept]]) -> 
         p = pred.get(rid, [])
         text_sum += 1.0 - wer(g, p)
 
-        j_a, _ = _sample_field_jaccard(g, p, "assertions", weighted=False)
+        j_a, _ = field_j(g, p, "assertions")
         assert_sum += j_a
 
-        j_c, w_i = _sample_field_jaccard(g, p, "candidates", weighted=True)
+        j_c, w_i = field_j(g, p, "candidates")
         cand_num += j_c * w_i
         cand_den += w_i
 
