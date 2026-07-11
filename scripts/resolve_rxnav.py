@@ -43,14 +43,21 @@ _FORM = re.compile(
 _VOL = re.compile(r"\b\d+(\.\d+)?\s*ml\b", re.I)
 
 
-def clean_for_query(span: str) -> str:
+def _base_clean(span: str):
+    """Strip route/freq/volume. Returns (term, has_dose_form_word)."""
     s = span.lower()
     s = re.sub(r"\bpo\b", " ", s)
     s = re.sub(r"\biv\b", " injection ", s)
     s = _FREQ.sub(" ", s)
     has_form = bool(_FORM.search(s))
     s = _VOL.sub(" ", s)
-    s = re.sub(r"\s+", " ", s).strip()
+    return re.sub(r"\s+", " ", s).strip(), has_form
+
+
+def clean_for_query(span: str) -> str:
+    """Term for approximateTerm: append 'oral tablet' when no form word (the
+    dominant form for `po` orders). /drugs uses the base term instead."""
+    s, has_form = _base_clean(span)
     if not has_form:
         s += " oral tablet"
     return s.strip()
@@ -66,6 +73,35 @@ def _approx(term: str, n: int = 8) -> list:
     return d.get("approximateGroup", {}).get("candidate", [])
 
 
+_STOP = {"mg", "mcg", "ml", "oral", "tablet", "capsule", "po", "iv", "g"}
+
+
+def _drugs_scd(term: str) -> list:
+    """/drugs SCD concepts as (rxcui, name). Precise but lower recall."""
+    enc = urllib.parse.quote(term)
+    d = _get(f"{RXNAV}/drugs.json?name={enc}")
+    out = []
+    for g in d.get("drugGroup", {}).get("conceptGroup", []):
+        if g.get("tty") == "SCD":
+            for c in g.get("conceptProperties", []):
+                out.append((c["rxcui"], c["name"]))
+    return out
+
+
+def _pick_scd(term: str, scd: list):
+    """Prefer single-ingredient SCD (no '/') best covering the query tokens."""
+    if not scd:
+        return None
+    single = [(r, n) for r, n in scd if "/" not in n] or scd
+    toks = [t for t in re.findall(r"[a-z0-9.]+", term.lower()) if t not in _STOP]
+
+    def score(name: str):
+        nl = name.lower()
+        return (sum(t in nl for t in toks), -len(name))  # coverage, then shortest
+
+    return max(single, key=lambda x: score(x[1]))[0]
+
+
 def _tty(rxcui: str) -> str:
     try:
         d = _get(f"{RXNAV}/rxcui/{rxcui}/property.json?propName=TTY")
@@ -76,6 +112,17 @@ def _tty(rxcui: str) -> str:
 
 
 def resolve(span: str, sleep: float = 0.1) -> list:
+    base, _ = _base_clean(span)
+    # 1) precise path: /drugs (base term, no appended form) -> single-ing SCD
+    if base:
+        try:
+            scd = _drugs_scd(base)
+            picked = _pick_scd(base, scd)
+            if picked:
+                return [picked]
+        except Exception:
+            pass
+    # 2) higher-recall fallback: approximateTerm (with 'oral tablet') + TTY=SCD
     term = clean_for_query(span)
     if not term:
         return []
