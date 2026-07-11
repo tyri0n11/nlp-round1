@@ -1,0 +1,19 @@
+# Core pipeline has NO hard third-party deps (stdlib only) so the heuristic
+# baseline + evaluator + output.zip run anywhere with Python 3.9+.
+#
+# LLM path — pick ONE backend:
+#
+# (A) Ollama (recommended on Apple Silicon; run `ollama pull qwen2.5:7b-instruct`)
+#     no pip package required — talks HTTP to the local Ollama server.
+#
+# (B) transformers backend (MPS on Mac, or CUDA on the rebuild box):
+#     uncomment the block below.
+#
+# transformers>=4.44
+# torch>=2.2
+# accelerate>=0.30
+# sentencepiece
+#
+# Optional dev/eval helpers:
+# pyyaml>=6.0     # only if you load configs/default.yaml directly
+# pytest>=7.0

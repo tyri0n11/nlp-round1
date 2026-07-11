@@ -1,0 +1,15 @@
+# Default pipeline config (mirrors PipelineConfig; scripts also take CLI flags).
+ner:
+  use_llm: true
+  use_baseline_fallback: true
+  llm_backend: ollama            # ollama | transformers
+  llm_model: qwen2.5:7b-instruct # <=9B, self-hosted (competition rule)
+  # transformers alt: Qwen/Qwen2.5-7B-Instruct
+
+linking:
+  rxnorm_path: data/resources/rxnorm.json
+
+paths:
+  input: data/input
+  output: output
+  zip: output.zip
