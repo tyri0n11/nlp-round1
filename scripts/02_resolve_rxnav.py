@@ -28,6 +28,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from npr.utils.io import read_gold  # noqa: E402
+from npr.pipeline._03_postprocess import llm_normalize  # noqa: E402
 from npr.pipeline._06_linking import normalize_span  # noqa: E402
 from npr.utils.schema import TYPE_DRUG  # noqa: E402
 
@@ -111,32 +112,6 @@ def _tty(rxcui: str) -> str:
         return ""
 
 
-_NORM_SYS = "You are a pharmacology normalizer. Output ONLY JSON, no prose."
-_NORM_USER = (
-    'Normalize this clinical drug mention (may be Vietnamese, a brand name, '
-    'misspelled, with dose/route/frequency) to JSON:\n'
-    '{{"is_drug":true/false,"ingredient_en":"generic English ingredient, '
-    'RxNorm style","strength":"number+unit or null","form":"oral tablet/'
-    'capsule/suspension/injection or null"}}\n'
-    'If it is NOT a real medication (symptom, time phrase, instruction), set '
-    'is_drug=false.\nMention: "{span}"\nJSON:'
-)
-
-
-def llm_normalize(span: str, backend) -> dict:
-    """Use the LLM to canonicalise brand/Vietnamese/messy names and flag
-    non-drugs. Returns {} on failure (caller falls back to regex cleaning)."""
-    try:
-        out = backend.generate(_NORM_SYS, _NORM_USER.format(span=span))
-    except Exception:
-        return {}
-    m = re.search(r"\{.*\}", out, re.DOTALL)
-    if not m:
-        return {}
-    try:
-        return json.loads(m.group(0))
-    except json.JSONDecodeError:
-        return {}
 
 
 def _norm_query(d: dict) -> str | None:

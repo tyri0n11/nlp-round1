@@ -26,31 +26,35 @@ model:
 
 ## predict: chạy AI trích xuất -> output/ + output.zip (~30 phút)
 predict: serve
-	$(PY) scripts/predict.py --input $(INPUT) --out $(OUT) --zip $(ZIP) --model $(MODEL)
+	$(PY) scripts/01_predict.py --input $(INPUT) --out $(OUT) --zip $(ZIP) --model $(MODEL)
 
 ## baseline: chạy nhanh KHÔNG cần AI (chỉ luật, để test dây chuyền)
 baseline:
-	$(PY) scripts/predict.py --input $(INPUT) --out $(OUT) --zip $(ZIP) --no-llm
+	$(PY) scripts/01_predict.py --input $(INPUT) --out $(OUT) --zip $(ZIP) --no-llm
 
 ## resolve: tra mã thuốc RxNorm qua LLM-normalize + RxNav (1 lần, cần mạng)
 resolve:
-	$(PY) scripts/resolve_rxnav.py --from-output $(OUT) --llm --model $(MODEL)
+	$(PY) scripts/02_resolve_rxnav.py --from-output $(OUT) --llm --model $(MODEL)
 
 ## resolve-fast: bản regex (không LLM) — nhanh hơn, kém chính xác trên tên brand
 resolve-fast:
-	$(PY) scripts/resolve_rxnav.py --from-output $(OUT)
+	$(PY) scripts/02_resolve_rxnav.py --from-output $(OUT)
 
 ## candidates: điền mã thuốc vào output có sẵn (không chạy lại AI) + nén zip
 candidates:
-	$(PY) scripts/apply_candidates.py --pred $(OUT) --zip $(ZIP)
+	$(PY) scripts/03_apply_candidates.py --pred $(OUT) --zip $(ZIP)
 
-## submit: dây chuyền đầy đủ predict -> resolve -> candidates
-submit: predict resolve candidates
+## filter: dọn output — cắt tiền tố + lọc THUỐC giả (is_drug) + relink
+filter: serve
+	$(PY) scripts/04_clean_output.py --pred $(OUT) --zip $(ZIP) --model $(MODEL)
+
+## submit: dây chuyền đầy đủ predict -> resolve -> candidates -> filter
+submit: predict resolve candidates filter
 	@echo "Bài nộp sẵn sàng: $(ZIP)"
 
 ## eval: chấm điểm với đáp án gold (nếu có) tại data/gold
 eval:
-	$(PY) scripts/evaluate.py --pred $(OUT) --gold $(GOLD)
+	$(PY) scripts/05_evaluate.py --pred $(OUT) --gold $(GOLD)
 
 ## test: chạy unit test
 test:
@@ -64,4 +68,4 @@ stats:
 clean:
 	rm -rf $(OUT) $(ZIP)
 
-.PHONY: help serve model predict baseline resolve resolve-fast candidates submit eval test stats clean
+.PHONY: help serve model predict baseline resolve resolve-fast candidates filter submit eval test stats clean

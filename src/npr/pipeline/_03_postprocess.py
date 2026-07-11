@@ -11,10 +11,42 @@ Two fixes:
 """
 from __future__ import annotations
 
+import json
 import re
 from typing import Callable, List, Optional
 
 from ..utils.schema import TYPE_DRUG, Concept
+
+# --- LLM drug-name normalizer (shared by resolver + is_drug filter) ---------
+_NORM_SYS = "You are a pharmacology normalizer. Output ONLY JSON, no prose."
+_NORM_USER = (
+    'Normalize this clinical drug mention (may be Vietnamese, a brand name, '
+    'misspelled, with dose/route/frequency) to JSON:\n'
+    '{{"is_drug":true/false,"ingredient_en":"generic English ingredient, '
+    'RxNorm style","strength":"number+unit or null","form":"oral tablet/'
+    'capsule/suspension/injection or null"}}\n'
+    'If it is NOT a real medication (symptom, time phrase, instruction), set '
+    'is_drug=false.\nMention: "{span}"\nJSON:'
+)
+
+
+def llm_normalize(span: str, backend) -> dict:
+    """Canonicalise a brand/Vietnamese/messy drug name and flag non-drugs.
+
+    `backend` is any object with .generate(system, user) -> str (e.g.
+    OllamaBackend). Returns {} on failure so callers can fall back.
+    """
+    try:
+        out = backend.generate(_NORM_SYS, _NORM_USER.format(span=span))
+    except Exception:
+        return {}
+    m = re.search(r"\{.*\}", out, re.DOTALL)
+    if not m:
+        return {}
+    try:
+        return json.loads(m.group(0))
+    except json.JSONDecodeError:
+        return {}
 
 # leading filler verbs/phrases (longest first so multi-word ones match first)
 _LEADING = [

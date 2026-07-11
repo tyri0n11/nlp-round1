@@ -25,13 +25,15 @@ from npr.pipeline import _04_align as align  # noqa: E402
 from npr.utils.io import read_gold, read_inputs, write_outputs  # noqa: E402
 from npr.pipeline._06_linking import RxNormLinker, normalize_span  # noqa: E402
 from npr.pipeline import _dedup  # noqa: E402
-from npr.pipeline._03_postprocess import DrugValidator, strip_leading_noise  # noqa: E402
+from npr.pipeline._03_postprocess import (  # noqa: E402
+    DrugValidator,
+    llm_normalize,
+    strip_leading_noise,
+)
 from npr.utils.schema import TYPE_DRUG, validate_concept  # noqa: E402
 
 
 def build_is_drug_fn(backend, cache_path: Path):
-    from scripts.resolve_rxnav import llm_normalize  # local import
-
     cache: dict = json.loads(cache_path.read_text()) if cache_path.exists() else {}
 
     def is_drug(span: str):
