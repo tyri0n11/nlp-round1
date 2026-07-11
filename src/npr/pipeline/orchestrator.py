@@ -10,25 +10,15 @@ Stages:
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import List, Optional
+from typing import List
 
-from . import align
-from .assertions import rules as assert_rules
-from .linking.rxnorm import RxNormLinker
-from .ner import baseline as ner_baseline
+from ..config import PipelineConfig
+from ..utils.schema import Concept, validate_concept
+from . import align, assertions as assert_rules, ner_baseline
+from .linking import RxNormLinker
 from .postprocess import clean_spans
-from .schema import Concept, validate_concept
 
-
-@dataclass
-class PipelineConfig:
-    use_llm: bool = True
-    use_baseline_fallback: bool = True
-    llm_backend: str = "ollama"
-    llm_model: str = "qwen3:8b"
-    llm_think: Optional[bool] = False  # False disables slow <think> on qwen3
-    rxnorm_path: str = "data/resources/rxnorm.json"
+__all__ = ["Pipeline", "PipelineConfig"]
 
 
 def _dedup(concepts: List[Concept]) -> List[Concept]:
@@ -49,7 +39,7 @@ class Pipeline:
         self.linker = RxNormLinker.from_json(cfg.rxnorm_path)
         self._extractor = None
         if cfg.use_llm:
-            from .ner.llm import LLMExtractor, make_backend
+            from .ner_llm import LLMExtractor, make_backend
 
             kw = {"model": cfg.llm_model}
             if cfg.llm_backend == "ollama":

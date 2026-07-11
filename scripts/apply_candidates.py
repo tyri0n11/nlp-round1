@@ -14,9 +14,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from npr.io_utils import read_gold, write_outputs  # noqa: E402
-from npr.linking.rxnorm import RxNormLinker  # noqa: E402
-from npr.schema import LINKED_TYPES  # noqa: E402
+from npr.utils.io import read_gold, write_outputs  # noqa: E402
+from npr.pipeline.linking import RxNormLinker  # noqa: E402
+from npr.utils.schema import LINKED_TYPES  # noqa: E402
 
 
 def main() -> int:

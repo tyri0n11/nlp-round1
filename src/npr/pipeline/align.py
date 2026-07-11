@@ -10,7 +10,7 @@ from __future__ import annotations
 import re
 from typing import List, Optional, Tuple
 
-from .schema import Concept
+from ..utils.schema import Concept
 
 
 def _find_exact(haystack: str, needle: str, start: int) -> Optional[Tuple[int, int]]:

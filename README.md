@@ -22,17 +22,23 @@ with no model available.
 
 ```
 src/npr/
-  schema.py        types (THUỐC, TRIỆU_CHỨNG, CHẨN_ĐOÁN, THỦ_THUẬT, XÉT_NGHIỆM),
-                   assertion vocab, Concept, validator
-  io_utils.py      read N.txt -> write N.json (+ output.zip with output/ root)
-  align.py         surface string -> exact char offsets
-  ner/llm.py       Qwen2.5-7B extractor; Ollama + transformers backends
-  ner/baseline.py  regex drug-list fallback
-  linking/rxnorm.py  offline RXCUI lookup
-  assertions/rules.py  cue-based assertion backfill
-  pipeline.py      orchestration
-  evaluate.py      local (unofficial) WER + Jaccard scorer
-scripts/           predict.py, evaluate.py, build_rxnorm.py
+  config.py              PipelineConfig (+ YAML loader)
+  pipeline/              # the inference stages
+    orchestrator.py        Pipeline: NER -> align -> assertions -> linking -> validate
+    ner_llm.py             Qwen3-8B extractor; Ollama + transformers backends
+    ner_baseline.py        regex drug-list fallback
+    align.py               surface string -> exact char offsets
+    assertions.py          cue-based assertion backfill
+    linking.py             offline RxNorm RXCUI lookup
+    postprocess.py         strip "cho/dùng" prefixes; is_drug filter
+  utils/                 # shared helpers
+    schema.py              types, assertion vocab, Concept, validator
+    io.py                  read N.txt -> write N.json (+ output.zip)
+    evaluate.py            local (unofficial) WER + Jaccard scorer
+config/default.yaml      pipeline config
+data/                    input/ (100 records), resources/ (rxnorm.json, non_drugs.json)
+scripts/                 predict, evaluate, resolve_rxnav, apply_candidates,
+                         clean_output, build_rxnorm
 ```
 
 ## Setup
@@ -96,7 +102,7 @@ python3 scripts/predict.py --no-llm
 ## Evaluate locally
 
 `scripts/evaluate.py` implements an **unofficial** reading of the metric (see the
-interpretation notes in `src/npr/evaluate.py` — the BTC evaluator is
+interpretation notes in `src/npr/utils/evaluate.py` — the BTC evaluator is
 authoritative). Point it at a gold dir laid out like the predictions:
 
 ```bash

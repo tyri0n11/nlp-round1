@@ -10,7 +10,7 @@ from __future__ import annotations
 import re
 from typing import List
 
-from ..schema import (
+from ..utils.schema import (
     ASSERT_ABSENT,
     ASSERT_HISTORICAL,
     ASSERT_POSSIBLE,

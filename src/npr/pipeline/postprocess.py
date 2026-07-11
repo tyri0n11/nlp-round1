@@ -14,7 +14,7 @@ from __future__ import annotations
 import re
 from typing import Callable, List, Optional
 
-from .schema import TYPE_DRUG, Concept
+from ..utils.schema import TYPE_DRUG, Concept
 
 # leading filler verbs/phrases (longest first so multi-word ones match first)
 _LEADING = [

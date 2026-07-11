@@ -15,7 +15,7 @@ import os
 import re
 from typing import List
 
-from ..schema import ASSERTIONS, TYPES, Concept
+from ..utils.schema import ASSERTIONS, TYPES, Concept
 
 SYSTEM_PROMPT = (
     "Bạn là hệ thống trích xuất khái niệm y khoa từ bệnh án tiếng Việt. "

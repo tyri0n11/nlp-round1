@@ -13,8 +13,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from npr.evaluate import evaluate  # noqa: E402
-from npr.io_utils import read_gold  # noqa: E402
+from npr.utils.evaluate import evaluate  # noqa: E402
+from npr.utils.io import read_gold  # noqa: E402
 
 
 def main() -> int:

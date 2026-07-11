@@ -21,12 +21,12 @@ _ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT))          # for `scripts.resolve_rxnav`
 sys.path.insert(0, str(_ROOT / "src"))  # for `npr`
 
-from npr import align  # noqa: E402
-from npr.io_utils import read_gold, read_inputs, write_outputs  # noqa: E402
-from npr.linking.rxnorm import RxNormLinker, normalize_span  # noqa: E402
+from npr.pipeline import align  # noqa: E402
+from npr.utils.io import read_gold, read_inputs, write_outputs  # noqa: E402
+from npr.pipeline.linking import RxNormLinker, normalize_span  # noqa: E402
 from npr.pipeline import _dedup  # noqa: E402
-from npr.postprocess import DrugValidator, strip_leading_noise  # noqa: E402
-from npr.schema import TYPE_DRUG, validate_concept  # noqa: E402
+from npr.pipeline.postprocess import DrugValidator, strip_leading_noise  # noqa: E402
+from npr.utils.schema import TYPE_DRUG, validate_concept  # noqa: E402
 
 
 def build_is_drug_fn(backend, cache_path: Path):
@@ -69,7 +69,7 @@ def main() -> int:
     validator = None
     flush = lambda: None
     if not args.no_llm_filter:
-        from npr.ner.llm import OllamaBackend
+        from npr.pipeline.ner_llm import OllamaBackend
         backend = OllamaBackend(model=args.model, think=False)
         is_drug, flush = build_is_drug_fn(backend, Path(args.non_drugs))
         validator = DrugValidator(is_drug)

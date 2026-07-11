@@ -11,7 +11,7 @@ from __future__ import annotations
 import re
 from typing import List
 
-from ..schema import TYPE_DRUG, Concept
+from ..utils.schema import TYPE_DRUG, Concept
 
 # dose/route/frequency signals typical of medication orders
 _UNIT = r"(?:mg|mcg|g|ml|units?)"

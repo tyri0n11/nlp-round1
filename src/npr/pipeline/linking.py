@@ -22,7 +22,7 @@ import re
 from pathlib import Path
 from typing import Dict, List
 
-from ..schema import LINKED_TYPES, Concept
+from ..utils.schema import LINKED_TYPES, Concept
 
 # tokens to strip when reducing a drug span to its ingredient
 _NOISE = re.compile(
