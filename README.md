@@ -56,12 +56,22 @@ pip install transformers torch accelerate sentencepiece   # see requirements.txt
 
 ### RxNorm candidates (offline)
 
-Candidates are RxNorm RXCUIs. Build the lookup table once from an RxNorm RRF
-release (no external API is used at inference time — competition rule):
+Candidates are RxNorm RXCUIs (SCD granularity, e.g. `308135` = "amlodipine
+10 MG Oral Tablet"). Build the offline lookup table once — **no external API is
+used at inference time (competition rule); resolution happens at build time.**
+
+Recommended — resolve the actual drug spans via the free RxNav API (no UMLS
+license needed):
+
+```bash
+python3 scripts/resolve_rxnav.py --from-output output
+# -> data/resources/rxnorm.json  ({normalized_span: [RXCUI]}), SCD-preferred
+```
+
+Or, fully offline from an RxNorm RRF release (needs a free UMLS account):
 
 ```bash
 python3 scripts/build_rxnorm.py --rrf /path/to/RxNorm/rrf/RXNCONSO.RRF
-# -> data/resources/rxnorm.json   (ingredient/name -> [RXCUI])
 ```
 
 Without this file, drug `candidates` are left empty (everything else still runs).

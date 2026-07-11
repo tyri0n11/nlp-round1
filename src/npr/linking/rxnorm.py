@@ -43,6 +43,18 @@ def ingredient(span: str) -> str:
     return s
 
 
+def normalize_span(span: str) -> str:
+    """Cache key for a full drug span (dose + form matter for RxNorm SCD).
+
+    Only route/frequency abbreviations and whitespace are normalised so the
+    same order written slightly differently maps to one cache entry.
+    """
+    s = span.lower()
+    s = re.sub(r":\s*prn\b", " prn", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    return s
+
+
 class RxNormLinker:
     def __init__(self, table: Dict[str, List[str]] | None = None):
         self.table = table or {}
@@ -57,6 +69,11 @@ class RxNormLinker:
         return cls(json.loads(p.read_text(encoding="utf-8")))
 
     def link(self, span: str) -> List[str]:
+        # 1) exact full-span cache (built offline from RxNav; dose+form aware)
+        norm = normalize_span(span)
+        if norm in self.table:
+            return list(self.table[norm])
+        # 2) ingredient-level fallback (if the table is ingredient-keyed)
         ing = ingredient(span)
         if not ing:
             return []
