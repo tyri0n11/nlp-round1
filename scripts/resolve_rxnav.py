@@ -111,7 +111,64 @@ def _tty(rxcui: str) -> str:
         return ""
 
 
-def resolve(span: str, sleep: float = 0.1) -> list:
+_NORM_SYS = "You are a pharmacology normalizer. Output ONLY JSON, no prose."
+_NORM_USER = (
+    'Normalize this clinical drug mention (may be Vietnamese, a brand name, '
+    'misspelled, with dose/route/frequency) to JSON:\n'
+    '{{"is_drug":true/false,"ingredient_en":"generic English ingredient, '
+    'RxNorm style","strength":"number+unit or null","form":"oral tablet/'
+    'capsule/suspension/injection or null"}}\n'
+    'If it is NOT a real medication (symptom, time phrase, instruction), set '
+    'is_drug=false.\nMention: "{span}"\nJSON:'
+)
+
+
+def llm_normalize(span: str, backend) -> dict:
+    """Use the LLM to canonicalise brand/Vietnamese/messy names and flag
+    non-drugs. Returns {} on failure (caller falls back to regex cleaning)."""
+    try:
+        out = backend.generate(_NORM_SYS, _NORM_USER.format(span=span))
+    except Exception:
+        return {}
+    m = re.search(r"\{.*\}", out, re.DOTALL)
+    if not m:
+        return {}
+    try:
+        return json.loads(m.group(0))
+    except json.JSONDecodeError:
+        return {}
+
+
+def _norm_query(d: dict) -> str | None:
+    if not d.get("is_drug"):
+        return None
+    ing = (d.get("ingredient_en") or "").strip()
+    if not ing or ing.lower() == "null":
+        return None
+    st = str(d.get("strength") or "").strip()
+    if st.lower() == "null":
+        st = ""
+    return f"{ing} {st}".strip()
+
+
+def resolve(span: str, sleep: float = 0.1, backend=None) -> list:
+    # 0) optional LLM normalization: brand->generic, VN->EN, filter non-drugs
+    if backend is not None:
+        d = llm_normalize(span, backend)
+        if d:  # got a parse
+            q = _norm_query(d)
+            if q is None:
+                return []  # LLM says not a real drug -> no candidate
+            try:
+                scd = _drugs_scd(q)
+                picked = _pick_scd(q, scd)
+                if picked:
+                    return [picked]
+            except Exception:
+                pass
+            # keep the normalized ingredient for the regex/approx fallback below
+            span = f"{q} {d.get('form') or 'oral tablet'}"
+
     base, _ = _base_clean(span)
     # 1) precise path: /drugs (base term, no appended form) -> single-ing SCD
     if base:
@@ -167,7 +224,15 @@ def main() -> int:
     ap.add_argument("--spans")
     ap.add_argument("--out", default="data/resources/rxnorm.json")
     ap.add_argument("--sleep", type=float, default=0.1)
+    ap.add_argument("--llm", action="store_true",
+                    help="LLM-normalize names (brand->generic, VN->EN, filter non-drugs)")
+    ap.add_argument("--model", default="qwen3:8b")
     args = ap.parse_args()
+
+    backend = None
+    if args.llm:
+        from npr.ner.llm import OllamaBackend
+        backend = OllamaBackend(model=args.model, think=False)
 
     if args.from_output:
         spans = collect_spans_from_output(args.from_output)
@@ -184,7 +249,7 @@ def main() -> int:
         key = normalize_span(span)
         if key in table:
             continue
-        codes = resolve(span, args.sleep)
+        codes = resolve(span, args.sleep, backend=backend)
         table[key] = codes
         print(f"[{i}/{len(spans)}] {span!r} -> {codes}", flush=True)
         time.sleep(args.sleep)
