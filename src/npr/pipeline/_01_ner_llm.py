@@ -32,8 +32,12 @@ Nhãn assertion cho phép: {asserts}
 
 Quy tắc:
 - text: sao chép CHÍNH XÁC chuỗi con xuất hiện trong văn bản (giữ nguyên chữ hoa/thường, dấu, số, đơn vị liều).
+- QUAN TRỌNG — trích NGẮN GỌN, chỉ lấy cụm khái niệm cốt lõi (thường 1-5 từ), KHÔNG lấy cả câu.
+  * ĐÚNG: "ho", "đau nhức", "táo bón", "khó thở", "xơ gan do rượu", "đánh trống ngực"
+  * SAI (quá dài): "Bệnh nhân xuất hiện triệu chứng đánh trống ngực", "Cảm thấy mệt mỏi nhiều khi gắng sức trong tuần qua"
+  * BỎ các từ dẫn: "bệnh nhân", "xuất hiện", "cảm thấy", "có triệu chứng", "được chẩn đoán", "tình trạng", "ghi nhận".
 - THUỐC: gồm cả liều và đường dùng nếu có (vd "amlodipine 10 mg po daily").
-- TRIỆU_CHỨNG / CHẨN_ĐOÁN / THỦ_THUẬT / XÉT_NGHIỆM: chỉ lấy cụm mô tả, KHÔNG kèm assertion cho triệu chứng (để danh sách rỗng) trừ khi bị phủ định/nghi ngờ/tiền sử.
+- TRIỆU_CHỨNG / CHẨN_ĐOÁN / THỦ_THUẬT / XÉT_NGHIỆM: chỉ lấy cụm cốt lõi ngắn nhất.
 - assertions: MẶC ĐỊNH để rỗng []. Triệu chứng/chẩn đoán đang hiện diện -> [] (KHÔNG dùng isPresent). Chỉ gán khi có tín hiệu rõ: tiền sử/trước nhập viện -> ["isHistorical"]; phủ định (không, chưa, âm tính) -> ["isAbsent"]; nghi ngờ/theo dõi -> ["isPossible"]; giả định/nếu -> ["isHypothetical"]; của người thân -> ["isFamily"].
 - Giữ đúng thứ tự xuất hiện. Không bịa khái niệm không có trong văn bản.
 
