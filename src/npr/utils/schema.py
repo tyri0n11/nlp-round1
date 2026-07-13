@@ -19,19 +19,19 @@ from dataclasses import dataclass, field
 from typing import List, Optional
 
 # --- Concept types --------------------------------------------------------
-# Observed / expected labels for this clinical-Vietnamese task.
-TYPE_DRUG = "THUỐC"           # drug / medication
-TYPE_SYMPTOM = "TRIỆU_CHỨNG"  # symptom
-TYPE_DIAGNOSIS = "CHẨN_ĐOÁN"  # diagnosis
-TYPE_PROCEDURE = "THỦ_THUẬT"  # procedure / intervention
-TYPE_TEST = "XÉT_NGHIỆM"      # lab / diagnostic test
+# Confirmed from the official task rules (5 types):
+TYPE_DRUG = "THUỐC"                    # drug -> RxNorm candidates
+TYPE_SYMPTOM = "TRIỆU_CHỨNG"           # symptom (no candidates)
+TYPE_DIAGNOSIS = "CHẨN_ĐOÁN"           # diagnosis -> ICD-10 candidates (a set)
+TYPE_TEST_NAME = "TÊN_XÉT_NGHIỆM"      # test name, e.g. "TWBC", "NEUT%"
+TYPE_TEST_RESULT = "KẾT_QUẢ_XÉT_NGHIỆM"  # test result value, e.g. "14,43"
 
 TYPES = [
     TYPE_DRUG,
     TYPE_SYMPTOM,
     TYPE_DIAGNOSIS,
-    TYPE_PROCEDURE,
-    TYPE_TEST,
+    TYPE_TEST_NAME,
+    TYPE_TEST_RESULT,
 ]
 
 # Types that carry RxNorm candidate codes. Only drugs are linked to RxNorm.
